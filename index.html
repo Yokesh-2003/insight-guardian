@@ -1,26 +1,253 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Lovable App</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malware Insight</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span>Malware<span class="logo-highlight">Insight</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="#analyze">Analyze</a>
+                <a href="#features">Features</a>
+                <a href="#technology">Technology</a>
+            </div>
+            <a href="#analyze" class="cta-button">Start Scanning</a>
+        </nav>
+    </header>
 
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <main>
+        <section class="hero">
+            <div class="hero-background"></div>
+            <div class="hero-content">
+                <div class="badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Advanced Threat Detection</span>
+                </div>
+                <h1>Detect Malware with <span class="gradient-text">AI Precision</span></h1>
+                <p>Hybrid detection combining signature matching with deep learning anomaly detection. Powered by federated learning for privacy-preserving security.</p>
+                <div class="cta-buttons">
+                    <a href="#analyze" class="hero-button">Start Scanning <i class="fas fa-arrow-right"></i></a>
+                    <a href="#technology" class="glass-button">Learn More <i class="fas fa-chevron-down"></i></a>
+                </div>
+                <div class="stats">
+                    <div>
+                        <div class="stat-number">99.5%</div>
+                        <div class="stat-label">Detection Rate</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">&lt;2s</div>
+                        <div class="stat-label">Scan Time</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">0%</div>
+                        <div class="stat-label">Data Stored</div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+        <section id="analyze" class="analyze-section">
+            <div class="container">
+                <h2>Scan a File</h2>
+                <div class="drag-and-drop-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag and drop your file here, or click to select a file.</p>
+                    <input type="file" id="file-input" hidden>
+                </div>
+                <button id="analyze-button" class="cta-button">Analyze</button>
+                <div id="output-container" class="output-container" style="display: none;">
+                    <h3>Analysis Results</h3>
+                    <pre id="output-text"></pre>
+                </div>
+            </div>
+        </section>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+        <section id="features" class="features-section">
+            <div class="section-header">
+                <h2>Comprehensive Protection</h2>
+                <p>Multi-layered security approach combining traditional and cutting-edge techniques</p>
+            </div>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-search"></i>
+                    </div>
+                    <h3>Signature Detection</h3>
+                    <p>RegEx-based pattern matching against comprehensive malware signature databases and SHA-256 hash comparisons.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Deep Autoencoder</h3>
+                    <p>Neural network trained on benign samples to detect unknown threats through reconstruction error analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Federated Learning</h3>
+                    <p>Privacy-preserving collaborative model training. Your data never leaves your device.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Sandboxed Analysis</h3>
+                    <p>Files are processed in complete isolation with no executable permissions to ensure system safety.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Real-time Results</h3>
+                    <p>Lightning-fast analysis with live progress tracking and detailed verdict explanations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Zero Data Retention</h3>
+                    <p>Files are deleted immediately after analysis. Only metadata is logged for auditing purposes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="technology" class="technology-section">
+            <div class="technology-content">
+                <div class="technology-text">
+                    <h2>How It Works</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">01</div>
+                            <div>
+                                <h3>File Upload & Hashing</h3>
+                                <p>Files are securely uploaded and a SHA-256 hash is computed for signature matching.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">02</div>
+                            <div>
+                                <h3>Signature Scanning</h3>
+                                <p>Hash comparison against known malware database and RegEx pattern matching for suspicious strings.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">03</div>
+                            <div>
+                                <h3>ML Analysis</h3>
+                                <p>Deep Autoencoder extracts features (byte frequency, entropy) and computes reconstruction error.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">04</div>
+                            <div>
+                                <h3>Verdict Generation</h3>
+                                <p>Results are aggregated with confidence scores and detection method attribution.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="technology-visual">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div class="card-content">
+                            <div class="command">
+                                <span>$</span>
+                                <span>analyze malware_sample.exe</span>
+                            </div>
+                            <div class="output">
+                                <div class="text-apple-blue">→ Computing SHA-256 hash...</div>
+                                <div class="text-apple-blue">→ Scanning signature database...</div>
+                                <div class="text-apple-blue">→ Running deep autoencoder...</div>
+                                <div class="text-success">✓ Analysis complete</div>
+                                <div class="results">
+                                    <div><span class="label">Verdict:</span> <span class="text-destructive">MALICIOUS</span></div>
+                                    <div><span class="label">Method:</span> Anomaly Detection</div>
+                                    <div><span class="label">Confidence:</span> 94.7%</div>
+                                    <div><span class="label">Details:</span> High entropy, suspicious API calls</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Secure Your Files?</h2>
+                <p>Upload a file now and experience enterprise-grade malware detection powered by cutting-edge AI.</p>
+                <a href="#analyze" class="cta-button-2">Start Free Scan <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <a href="/" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <span>Malware<span class="logo-highlight">Insight</span></span>
+                </a>
+                <p>Advanced AI-powered malware detection.</p>
+            </div>
+            <div class="footer-links">
+                <div>
+                    <h4>Quick Links</h4>
+                    <a href="/">Home</a>
+                    <a href="#analyze">Analyze</a>
+                    <a href="#features">Features</a>
+                    <a href="#technology">Technology</a>
+                </div>
+                <div>
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 MalwareInsight. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const analyzeButton = document.getElementById('analyze-button');
+        const outputContainer = document.getElementById('output-container');
+        const outputText = document.getElementById('output-text');
+        const dragAndDropArea = document.querySelector('.drag-and-drop-area');
+        const fileInput = document.getElementById('file-input');
+
+        dragAndDropArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        analyzeButton.addEventListener('click', () => {
+            outputContainer.style.display = 'block';
+            outputText.textContent = 'Analyzing...';
+            // I will add the backend logic later
+        });
+    </script>
+</body>
 </html>
