@@ -6,44 +6,15 @@ import AnalysisResult, { AnalysisStatus, Verdict } from '@/components/AnalysisRe
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, RotateCcw } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-// Simulated analysis for demo purposes
-const simulateAnalysis = (): Promise<{
-  verdict: Verdict;
-  detectionMethod: 'signature' | 'anomaly' | 'none';
-  confidence: number;
-  details: string[];
-  hash: string;
-}> => {
-  return new Promise((resolve) => {
-    const random = Math.random();
-    const isMalicious = random > 0.7;
-    
-    setTimeout(() => {
-      resolve({
-        verdict: isMalicious ? 'malicious' : 'safe',
-        detectionMethod: isMalicious 
-          ? (random > 0.85 ? 'signature' : 'anomaly') 
-          : 'none',
-        confidence: isMalicious ? 85 + Math.random() * 14 : 99.5 + Math.random() * 0.5,
-        details: isMalicious 
-          ? [
-              'Suspicious API calls detected',
-              'Encrypted payload found',
-              'Known malicious pattern matched',
-            ]
-          : [
-              'No known malware signatures found',
-              'Entropy levels within normal range',
-              'No suspicious API references detected',
-            ],
-        hash: Array.from({ length: 64 }, () => 
-          '0123456789abcdef'[Math.floor(Math.random() * 16)]
-        ).join(''),
-      });
-    }, 500);
-  });
-};
+import { toast } from '@/hooks/use-toast';
+import {
+  uploadFileForAnalysis,
+  mapVerdictToFrontend,
+  getDetectionMethod,
+  calculateConfidence,
+  generateDetails,
+  MalwareAnalysisReport,
+} from '@/services/malwareApi';
 
 const AnalyzePage: React.FC = () => {
   const [status, setStatus] = useState<AnalysisStatus>('idle');
@@ -55,44 +26,52 @@ const AnalyzePage: React.FC = () => {
     details: string[];
     hash: string;
     scanTime: number;
+    rawReport?: MalwareAnalysisReport;
   } | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const runAnalysis = useCallback(async (file: File) => {
     const startTime = Date.now();
     setSelectedFile(file);
     setResult(null);
+    setError(null);
 
-    // Simulate upload
-    setStatus('uploading');
-    await new Promise(r => setTimeout(r, 800));
+    try {
+      // Show uploading status
+      setStatus('uploading');
 
-    // Simulate hashing
-    setStatus('hashing');
-    await new Promise(r => setTimeout(r, 600));
+      // Call the real backend API
+      const report = await uploadFileForAnalysis(file);
+      const scanTime = (Date.now() - startTime) / 1000;
 
-    // Simulate signature scan
-    setStatus('signature-scan');
-    await new Promise(r => setTimeout(r, 1000));
-
-    // Simulate ML analysis
-    setStatus('ml-analysis');
-    await new Promise(r => setTimeout(r, 1200));
-
-    // Get results
-    const analysisResult = await simulateAnalysis();
-    const scanTime = (Date.now() - startTime) / 1000;
-
-    setResult({
-      ...analysisResult,
-      scanTime,
-    });
-    setStatus('complete');
+      // Process the response
+      setResult({
+        verdict: mapVerdictToFrontend(report.final_verdict),
+        detectionMethod: getDetectionMethod(report),
+        confidence: calculateConfidence(report),
+        details: generateDetails(report),
+        hash: report.hash,
+        scanTime,
+        rawReport: report,
+      });
+      setStatus('complete');
+    } catch (err) {
+      console.error('Analysis failed:', err);
+      setError(err instanceof Error ? err.message : 'Analysis failed');
+      setStatus('idle');
+      toast({
+        title: 'Analysis Failed',
+        description: err instanceof Error ? err.message : 'Could not connect to analysis backend. Make sure the server is running.',
+        variant: 'destructive',
+      });
+    }
   }, []);
 
   const handleReset = () => {
     setStatus('idle');
     setSelectedFile(null);
     setResult(null);
+    setError(null);
   };
 
   return (
