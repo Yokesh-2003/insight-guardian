@@ -85,22 +85,44 @@ const AnalysisResult: React.FC<AnalysisResultProps> = ({
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-8 animate-fade-in">
-      {/* Progress - Simplified for real API call */}
+      {/* Progress Steps */}
       {!isComplete && (
         <div className="glass-card rounded-2xl p-6">
-          <div className="flex flex-col items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl gradient-blue flex items-center justify-center animate-pulse">
-              <FileSearch className="w-8 h-8 text-white" />
-            </div>
-            <div className="text-center">
-              <p className="text-lg font-semibold text-foreground">Analyzing File...</p>
-              <p className="text-sm text-muted-foreground mt-1">
-                Running YARA signature scan and ML anomaly detection
-              </p>
-            </div>
-            <div className="w-full max-w-xs bg-secondary rounded-full h-2 overflow-hidden">
-              <div className="h-full gradient-blue animate-pulse" style={{ width: '60%' }} />
-            </div>
+          <div className="flex items-center justify-between">
+            {steps.map((step, index) => {
+              const stepStatus = getStepStatus(step.key);
+              const Icon = step.icon;
+              
+              return (
+                <React.Fragment key={step.key}>
+                  <div className="flex flex-col items-center gap-2">
+                    <div className={cn(
+                      "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500",
+                      stepStatus === 'complete' && "gradient-safe text-white",
+                      stepStatus === 'active' && "gradient-blue text-white animate-pulse",
+                      stepStatus === 'pending' && "bg-secondary text-muted-foreground"
+                    )}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span className={cn(
+                      "text-xs font-medium transition-colors",
+                      stepStatus === 'active' ? "text-apple-blue" : 
+                      stepStatus === 'complete' ? "text-success" : "text-muted-foreground"
+                    )}>
+                      {step.label}
+                    </span>
+                  </div>
+                  {index < steps.length - 1 && (
+                    <div className={cn(
+                      "flex-1 h-0.5 mx-3 rounded-full transition-all duration-500",
+                      getStepStatus(steps[index + 1].key) !== 'pending' 
+                        ? "gradient-blue" 
+                        : "bg-border"
+                    )} />
+                  )}
+                </React.Fragment>
+              );
+            })}
           </div>
         </div>
       )}
